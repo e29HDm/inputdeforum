@@ -10,6 +10,9 @@ const fps = ref(30);
 const audioPlayer = ref<HTMLAudioElement | null>(null);
 const isPlaying = ref(false);
 const time = ref(0);
+type SpeedValues = 0.25 | 0.5 | 1 | 2 | 4;
+const speed = ref<SpeedValues>(1);
+const speeds: readonly SpeedValues[] = [0.25, 0.5, 1, 2, 4] as const;
 
 const handleFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -61,6 +64,21 @@ const handleAddFrameBetween = () => {
     emit("update:addFrameAt", currentFrame.value);
   }
 };
+
+const getButtonColors = (speedValue: SpeedValues) => {
+  return speed.value === speedValue
+    ? undefined
+    : "bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-200";
+};
+
+watch(
+  () => speed.value,
+  (newSpeed) => {
+    if (audioPlayer.value) {
+      audioPlayer.value.playbackRate = newSpeed;
+    }
+  }
+);
 </script>
 
 <template>
@@ -107,6 +125,21 @@ const handleAddFrameBetween = () => {
               {{ currentFrame }}
             </span>
           </div>
+          <XButton
+            v-for="speedValue in speeds"
+            :key="speedValue"
+            @click="speed = speedValue"
+            :title="
+              speed === speedValue
+                ? 'Current speed'
+                : 'Play at ' + speedValue + 'x speed'
+            "
+            :colors="getButtonColors(speedValue)"
+          >
+            <span></span>
+            {{ speedValue }}x
+          </XButton>
+
           <XButton @click="handlePlayPause" :title="playPauseLabel">{{
             playPauseLabel
           }}</XButton>
