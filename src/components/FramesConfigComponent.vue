@@ -437,7 +437,7 @@ const handlePromptStyleChange = (value: string) => {
           class="flex-grow"
           :modelValue="stepIncrement"
           :min="1"
-          :max="100"
+          :max="10000"
           :step="1"
           :required="true"
           label="Steps increment"

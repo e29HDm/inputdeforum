@@ -18,6 +18,15 @@ const code = computed(() => {
 const copyCode = () => {
   navigator.clipboard.writeText(code.value);
 };
+
+const downloadJson = () => {
+  const element = document.createElement("a");
+  const file = new Blob([code.value], { type: "text/plain" });
+  element.href = URL.createObjectURL(file);
+  const fileName = props.config.batch_name.replace(/\s/g, "-").toLowerCase();
+  element.download = `${fileName}.json`;
+  element.click();
+};
 </script>
 
 <template>
@@ -29,7 +38,9 @@ const copyCode = () => {
           The code below automatically reflects your changes. You can copy/paste
           it in your favorite Deforum tool.
         </p>
-        <div class="flex items-end">
+        <div class="flex items-end space-x-4">
+          <!-- Download json button -->
+          <XButton @click="downloadJson">Download json</XButton>
           <XButton @click="copyCode">Copy code</XButton>
         </div>
       </div>
