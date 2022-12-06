@@ -7,7 +7,7 @@ export function generateConfig(config: GlobalConfig): string {
   Object.assign(newConfig, baseConfig);
 
   replaceValues(newConfig, config);
-  compileAnimationPrompts(newConfig, config.frames);
+  compileAnimationPrompts(newConfig, config.frames, config.promptStyle);
   compileFrameStrings(newConfig, config.frames);
 
   return JSON.stringify(newConfig, null, "  ");
@@ -41,7 +41,8 @@ function replaceValues(
 
 function compileAnimationPrompts(
   configJson: { [key: string]: any },
-  frames: Frame[]
+  frames: Frame[],
+  promptStyle: string
 ): void {
   const prompts: { [key: string]: string } = {};
   for (let i = 0; i < frames.length; i++) {
@@ -49,7 +50,7 @@ function compileAnimationPrompts(
     const prompt = frame.prompt;
     const id = frame.id;
     if (prompt !== undefined && prompt !== "") {
-      prompts[id] = prompt;
+      prompts[id] = `${prompt} ${promptStyle}`;
     }
   }
 

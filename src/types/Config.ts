@@ -30,6 +30,7 @@ export default class Config implements GlobalConfig {
   animation_mode: AnimationMode;
   resume_from_timestring: boolean;
   resume_timestring: string;
+  promptStyle: string;
 
   constructor() {
     this.batch_name = "default";
@@ -52,5 +53,6 @@ export default class Config implements GlobalConfig {
     this.animation_mode = AnimationMode.ThreeD;
     this.resume_from_timestring = false;
     this.resume_timestring = "";
+    this.promptStyle = "";
   }
 }

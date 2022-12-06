@@ -28,6 +28,7 @@ export interface GlobalConfig {
   animation_mode: AnimationMode;
   resume_from_timestring: boolean;
   resume_timestring: string;
+  promptStyle: string;
 }
 
 export interface FrameContract {
