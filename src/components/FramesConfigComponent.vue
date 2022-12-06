@@ -14,6 +14,7 @@ const emit = defineEmits([
   "update:addFrameBetween",
   "user-config:step-increment-change",
   "user-config:expression-mode-change",
+  "update:prompt-style",
 ]);
 
 const props = defineProps({
@@ -27,6 +28,10 @@ const props = defineProps({
   },
   isExpressionModeEnabled: {
     type: Boolean,
+    required: true,
+  },
+  promptStyle: {
+    type: String,
     required: true,
   },
 });
@@ -110,6 +115,10 @@ const handleErrorMessage = (
 
 const handleIsExpressionModeEnabled = (value: boolean) => {
   emit("user-config:expression-mode-change", value);
+};
+
+const handlePromptStyleChange = (value: string) => {
+  emit("update:prompt-style", value);
 };
 </script>
 
@@ -443,6 +452,12 @@ const handleIsExpressionModeEnabled = (value: boolean) => {
           >Reindex</XButton
         >
       </div>
+      <XTextarea
+        :modelValue="promptStyle"
+        label="Prompt style"
+        @update:modelValue="handlePromptStyleChange"
+        tooltip="Don't repeat your style in every prompt, just put it here"
+      />
       <XCheckbox
         :model-value="isExpressionModeEnabled"
         label="Math expressions mode"

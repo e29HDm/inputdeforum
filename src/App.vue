@@ -111,6 +111,11 @@ const handleAddFrameAt = (index: number) => {
   onConfigChange();
 };
 
+const handlePromptStyleChange = (newPromptStyle: string) => {
+  config.value.promptStyle = newPromptStyle;
+  onConfigChange();
+};
+
 onMounted(() => {
   userConfig.value = LocalStorage.getUserConfig() ?? new UserConfig();
 });
@@ -161,10 +166,12 @@ onMounted(() => {
       :frameList="config.frames"
       :stepIncrement="userConfig.stepIncrement ?? 1"
       :isExpressionModeEnabled="userConfig.isExpressionModeEnabled ?? false"
+      :promptStyle="config.promptStyle ?? ''"
       @user-config:step-increment-change="handleStepIncrementChange"
       @user-config:expression-mode-change="handleExpressionModeChange"
       @update:frameList="handleFrameListChange"
       @update:addFrameBetween="handleAddFrameBetween"
+      @update:prompt-style="handlePromptStyleChange"
     />
     <JsonConfigGenerator :config="config" />
     <footer class="flex justify-center items-center space-x-8">
