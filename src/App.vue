@@ -116,6 +116,11 @@ const handlePromptStyleChange = (newPromptStyle: string) => {
   onConfigChange();
 };
 
+const handleSubstractXFramesChange = (newSubstractXFrames: number) => {
+  config.value.substractXFrames = newSubstractXFrames;
+  onConfigChange();
+};
+
 onMounted(() => {
   userConfig.value = LocalStorage.getUserConfig() ?? new UserConfig();
 });
@@ -167,11 +172,13 @@ onMounted(() => {
       :stepIncrement="userConfig.stepIncrement ?? 1"
       :isExpressionModeEnabled="userConfig.isExpressionModeEnabled ?? false"
       :promptStyle="config.promptStyle ?? ''"
+      :substractXFrames="config.substractXFrames ?? 0"
       @user-config:step-increment-change="handleStepIncrementChange"
       @user-config:expression-mode-change="handleExpressionModeChange"
       @update:frameList="handleFrameListChange"
       @update:addFrameBetween="handleAddFrameBetween"
       @update:prompt-style="handlePromptStyleChange"
+      @update:substract-x-frames="handleSubstractXFramesChange"
     />
     <JsonConfigGenerator :config="config" />
     <footer class="flex justify-center items-center space-x-8">

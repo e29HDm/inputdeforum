@@ -15,6 +15,7 @@ const emit = defineEmits([
   "user-config:step-increment-change",
   "user-config:expression-mode-change",
   "update:prompt-style",
+  "update:substract-x-frames",
 ]);
 
 const props = defineProps({
@@ -32,6 +33,10 @@ const props = defineProps({
   },
   promptStyle: {
     type: String,
+    required: true,
+  },
+  substractXFrames: {
+    type: Number,
     required: true,
   },
 });
@@ -458,6 +463,18 @@ const handlePromptStyleChange = (value: string) => {
         @update:modelValue="handlePromptStyleChange"
         tooltip="Don't repeat your style in every prompt, just put it here"
       />
+
+      <XNumber
+        :modelValue="substractXFrames"
+        :min="-100000000"
+        :max="100000000"
+        :step="1"
+        :required="true"
+        label="Substract from IDs"
+        tooltip="Substract this number to each frame ID in the config output"
+        @update:modelValue="(newSubstractXFrames: number) => $emit('update:substract-x-frames', newSubstractXFrames)"
+      />
+
       <XCheckbox
         :model-value="isExpressionModeEnabled"
         label="Math expressions mode"

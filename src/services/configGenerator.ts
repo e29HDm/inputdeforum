@@ -7,8 +7,13 @@ export function generateConfig(config: GlobalConfig): string {
   Object.assign(newConfig, baseConfig);
 
   replaceValues(newConfig, config);
-  compileAnimationPrompts(newConfig, config.frames, config.promptStyle);
-  compileFrameStrings(newConfig, config.frames);
+  compileAnimationPrompts(
+    newConfig,
+    config.frames,
+    config.promptStyle,
+    config.substractXFrames
+  );
+  compileFrameStrings(newConfig, config.frames, config.substractXFrames);
 
   return JSON.stringify(newConfig, null, "  ");
 }
@@ -42,13 +47,14 @@ function replaceValues(
 function compileAnimationPrompts(
   configJson: { [key: string]: any },
   frames: Frame[],
-  promptStyle: string
+  promptStyle: string,
+  substractXFrames: number
 ): void {
   const prompts: { [key: string]: string } = {};
   for (let i = 0; i < frames.length; i++) {
     const frame = frames[i];
     const prompt = frame.prompt;
-    const id = frame.id;
+    const id = frame.id - substractXFrames;
     if (prompt !== undefined && prompt !== "") {
       prompts[id] = `${prompt} ${promptStyle}`;
     }
@@ -59,7 +65,8 @@ function compileAnimationPrompts(
 
 function compileFrameStrings(
   configJson: { [key: string]: any },
-  frames: Frame[]
+  frames: Frame[],
+  substractXFrames: number
 ): void {
   const frameStrings = {
     angle: "",
@@ -77,7 +84,7 @@ function compileFrameStrings(
 
   for (let i = 0; i < frames.length; i++) {
     const frame = frames[i] as any;
-    const id = frame.id;
+    const id = frame.id - substractXFrames;
 
     for (const key in frameStrings) {
       if (Object.prototype.hasOwnProperty.call(frameStrings, key)) {
