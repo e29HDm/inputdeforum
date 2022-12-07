@@ -31,6 +31,7 @@ export default class Config implements GlobalConfig {
   resume_from_timestring: boolean;
   resume_timestring: string;
   promptStyle: string;
+  substractXFrames: number;
 
   constructor() {
     this.batch_name = "default";
@@ -54,5 +55,6 @@ export default class Config implements GlobalConfig {
     this.resume_from_timestring = false;
     this.resume_timestring = "";
     this.promptStyle = "";
+    this.substractXFrames = 0;
   }
 }
