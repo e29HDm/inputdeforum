@@ -166,7 +166,7 @@ onMounted(() => {
       :config="config"
       @update:configValue="handleConfigChange"
     />
-    <MusicPlayer @update:addFrameAt="handleAddFrameAt" />
+    <MusicPlayer :config="config" @update:addFrameAt="handleAddFrameAt" />
     <FramesConfigComponent
       :frameList="config.frames"
       :stepIncrement="userConfig.stepIncrement ?? 1"

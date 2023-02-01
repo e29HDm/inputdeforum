@@ -30,6 +30,7 @@ export interface GlobalConfig {
   resume_timestring: string;
   promptStyle: string;
   substractXFrames: number;
+  fps: number;
 }
 
 export interface FrameContract {
