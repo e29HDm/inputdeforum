@@ -38,7 +38,8 @@ type NumberConfigKeys =
   | keyof Pick<Config, "ddim_eta">
   | keyof Pick<Config, "diffusion_cadence">
   | keyof Pick<Config, "midas_weight">
-  | keyof Pick<Config, "fov">;
+  | keyof Pick<Config, "fov">
+  | keyof Pick<Config, "fps">;
 
 const handleNumberChange = (value: number, key: NumberConfigKeys) => {
   props.config[key] = Number(value);
@@ -91,7 +92,8 @@ const handleSelectableChange = (
     <div class="flex flex-col space-y-2 mb-5">
       <h2 class="text-2xl font-bold mb-2">Global config</h2>
       <p class="text-gray-600 text-sm">
-        Only 3D animation mode is supported. Please refer to Deforum documentation for further details.
+        Only 3D animation mode is supported. Please refer to Deforum
+        documentation for further details.
       </p>
     </div>
     <div class="flex flex-col space-y-4 bg-gray-50 rounded-md shadow p-2">
@@ -146,7 +148,7 @@ const handleSelectableChange = (
 
       <x-select
         label="Sampler"
-        :modelValue="config.sampler ?? Sampler.Euler"
+        :modelValue="config.sampler ?? Sampler.EulerAncestral"
         :options="samplerList"
         @update:modelValue="(newSampler: Sampler) => (handleSelectableChange(newSampler, 'sampler'))"
         tooltip="The sampler used for the generation. Report to the documentation for more information"
@@ -278,6 +280,17 @@ const handleSelectableChange = (
         @update:modelValue="(newResumeTimestring: string) => (handleStringChange(newResumeTimestring, 'resume_timestring'))"
         tooltip="The required timestamp to reference when resuming"
       ></x-text>
+
+      <x-number
+        label="FPS"
+        :modelValue="config.fps ?? 30"
+        :min="1"
+        :max="1000000"
+        :step="1"
+        :required="true"
+        @update:modelValue="(newFps: number) => (handleNumberChange(newFps, 'fps'))"
+        tooltip="Frames per second for the video output [1, 1000000]"
+      ></x-number>
     </div>
   </div>
 </template>

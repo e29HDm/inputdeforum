@@ -1,8 +1,19 @@
+// update samplerList with new samplers
+// ["klms","dpm2","dpm2_ancestral","heun","euler","euler_ancestral","plms", "ddim", "dpm_fast", "dpm_adaptive", "dpmpp_2s_a", "dpmpp_2m"]
+
 export enum Sampler {
+  EulerAncestral = "euler_ancestral",
   Euler = "euler",
   Klms = "klms",
   Plms = "plms",
   Ddim = "ddim",
+  Dpm2 = "dpm2",
+  Dpm2Ancestral = "dpm2_ancestral",
+  Heun = "heun",
+  DpmFast = "dpm_fast",
+  DpmAdaptive = "dpm_adaptive",
+  Dpmpp2sA = "dpmpp_2s_a",
+  Dpmpp2mA = "dpmpp_2m_a",
 }
 
 export enum SeedBehavior {
@@ -33,10 +44,18 @@ export enum Border {
 }
 
 export const samplerList = [
+  Sampler.EulerAncestral,
   Sampler.Euler,
   Sampler.Klms,
   Sampler.Plms,
   Sampler.Ddim,
+  Sampler.Dpm2,
+  Sampler.Dpm2Ancestral,
+  Sampler.Heun,
+  Sampler.DpmFast,
+  Sampler.DpmAdaptive,
+  Sampler.Dpmpp2sA,
+  Sampler.Dpmpp2mA,
 ];
 
 export const seedBehaviorList = [

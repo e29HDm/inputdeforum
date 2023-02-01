@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import XButton from "./inputs/XButton.vue";
-import XNumber from "./inputs/XNumber.vue";
 
 const emit = defineEmits(["update:addFrameAt"]);
 
+const props = defineProps({
+  config: {
+    type: Object,
+    required: true,
+  },
+});
+
 const file = ref<File | null>(null);
-const fps = ref(30);
 const audioPlayer = ref<HTMLAudioElement | null>(null);
 const isPlaying = ref(false);
 const time = ref(0);
@@ -48,7 +53,7 @@ const playPauseLabel = computed(() => {
 
 const currentFrame = computed(() => {
   if (audioPlayer.value) {
-    return Math.floor(time.value * fps.value);
+    return Math.floor(time.value * props.config.fps);
   }
   return 0;
 });
@@ -90,13 +95,6 @@ watch(
       </p>
     </div>
     <div class="flex flex-col space-y-4 bg-gray-50 rounded-md shadow p-2">
-      <XNumber
-        label="FPS"
-        :modelValue="fps"
-        @update:modelValue="(newFpsValue) => (fps = newFpsValue)"
-        :min="1"
-        :max="1000"
-      />
       <div class="flex space-x-4 items-center">
         <label class="text-gray-600 text-sm w-1/5 text-right" for="music-upload"
           >Music file</label

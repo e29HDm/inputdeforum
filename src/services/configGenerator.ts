@@ -43,6 +43,7 @@ function replaceValues(
   configJson.resume_timestring = config.resume_timestring;
   configJson.max_frames =
     config.frames[config.frames.length - 1].id - config.substractXFrames;
+  configJson.fps = config.fps;
 }
 
 function compileAnimationPrompts(
